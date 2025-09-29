@@ -75,7 +75,6 @@ model SpotifyToken {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
-    @@index([expiresAt]) // On pourra faire une regle pour envoyer un mail ou un message quand le token va bientot expirer
     @@map("spotify_tokens")
 }
 
@@ -89,7 +88,6 @@ model YoutubeToken {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
-    @@index([expiresAt]) // On pourra faire une regle pour envoyer un mail ou un message quand le token va bientot expirer
     @@map("youtube_tokens")
 }
 
@@ -103,7 +101,6 @@ model DeezerToken {
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 
-    @@index([expiresAt]) // On pourra faire une regle pour envoyer un mail ou un message quand le token va bientot expirer
     @@map("deezer_tokens")
 }
 
