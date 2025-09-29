@@ -47,7 +47,6 @@ model User {
     deezerToken  DeezerToken?
 
     @@index([createdAt]) // Pour indexer les utilisateurs récents
-    @@index([username])
     @@index([email, username])
     @@map("users")
 }
