@@ -1,4 +1,3 @@
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -24,6 +23,9 @@ model Follow {
     createdAt DateTime @default(now())
 
     @@id([followerId, followingId])
+    // Je te propose ces index :
+    @@index([followingId, createdAt]) // Timeline des utilisateurs suivis
+    @@index([followerId, createdAt]) // Timeline des utilisateurs qui suivent
     @@map("follows")
 }
 
@@ -44,6 +46,7 @@ model User {
     youtubeToken YoutubeToken?
     deezerToken  DeezerToken?
 
+    @@index([createdAt]) // Pour indexer les utilisateurs récents
     @@index([email, username])
     @@map("users")
 }
@@ -113,5 +116,11 @@ model Song {
     createdAt      DateTime @default(now())
     updatedAt      DateTime @updatedAt
 
+    // Je te propose ces index :
+    @@index([userId, createdAt]) // Nous permettra de montrer les dernieres chansons de l'utilisateur
+    @@index([originPlatform]) // Pour ensuite creer un filtre par plateforme
+    @@index([artist]) // Pour ensuite creer un filtre par artiste
+    @@index([title]) // Pour ensuite creer un filtre par titre
+    @@index([createdAt])
     @@map("songs")
 }
