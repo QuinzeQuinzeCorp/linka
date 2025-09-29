@@ -1,0 +1,117 @@
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+enum Platform {
+    SPOTIFY @map("spotify")
+    YOUTUBE @map("youtube")
+    DEEZER  @map("deezer")
+}
+
+model Follow {
+    follower   User   @relation("Following", fields: [followerId], references: [id])
+    followerId String
+
+    following   User   @relation("Followers", fields: [followingId], references: [id])
+    followingId String
+
+    createdAt DateTime @default(now())
+
+    @@id([followerId, followingId])
+    @@map("follows")
+}
+
+model User {
+    id        String   @id @default(cuid())
+    email     String   @unique
+    username  String?  @unique
+    songs     Song[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    followers Follow[] @relation("Followers")
+    following Follow[] @relation("Following")
+
+    discordAccount DiscordAccount?
+
+    spotifyToken SpotifyToken?
+    youtubeToken YoutubeToken?
+    deezerToken  DeezerToken?
+
+    @@index([email, username])
+    @@map("users")
+}
+
+model DiscordAccount {
+    id            String   @id @default(cuid())
+    discordId     String   @unique
+    username      String
+    discriminator String
+    avatarUrl     String?
+    user          User     @relation(fields: [userId], references: [id])
+    userId        String   @unique
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    @@map("discord_accounts")
+}
+
+model SpotifyToken {
+    id           String   @id @default(cuid())
+    accessToken  String
+    refreshToken String
+    expiresAt    DateTime
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String   @unique
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("spotify_tokens")
+}
+
+model YoutubeToken {
+    id           String   @id @default(cuid())
+    accessToken  String
+    refreshToken String
+    expiresAt    DateTime
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String   @unique
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("youtube_tokens")
+}
+
+model DeezerToken {
+    id           String   @id @default(cuid())
+    accessToken  String
+    refreshToken String
+    expiresAt    DateTime
+    user         User     @relation(fields: [userId], references: [id])
+    userId       String   @unique
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("deezer_tokens")
+}
+
+model Song {
+    id             String   @id @default(cuid())
+    title          String
+    artist         String
+    album          String?
+    coverImageUrl  String?
+    originPlatform Platform
+    user           User     @relation(fields: [userId], references: [id])
+    userId         String
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+
+    @@map("songs")
+}

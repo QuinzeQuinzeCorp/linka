@@ -1,3 +1,11 @@
+# Linka
+
+Linka is an application and a bot made to easily share your favorite music with your friends !
+
+## Check TODO :
+
+![TODO.md](./TODO.md)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
