@@ -1,3 +1,6 @@
+// J'ai ete oblige de faire un ...all parce que ca fonctionnait pas sinon
+// si tu trouves une solution, je suis preneur
+
 import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {

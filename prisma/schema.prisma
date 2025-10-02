@@ -23,9 +23,8 @@ model Follow {
     createdAt DateTime @default(now())
 
     @@id([followerId, followingId])
-    // Je te propose ces index :
-    @@index([followingId, createdAt]) // Timeline des utilisateurs suivis
-    @@index([followerId, createdAt]) // Timeline des utilisateurs qui suivent
+    @@index([followingId, createdAt])
+    @@index([followerId, createdAt])
     @@map("follows")
 }
 
@@ -33,6 +32,8 @@ model User {
     id        String   @id @default(cuid())
     email     String   @unique
     username  String?  @unique
+    name      String?
+    image     String?
     songs     Song[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -46,7 +47,7 @@ model User {
     youtubeToken YoutubeToken?
     deezerToken  DeezerToken?
 
-    @@index([createdAt]) // Pour indexer les utilisateurs récents
+    @@index([createdAt])
     @@index([email, username])
     @@map("users")
 }
@@ -116,11 +117,10 @@ model Song {
     createdAt      DateTime @default(now())
     updatedAt      DateTime @updatedAt
 
-    // Je te propose ces index :
-    @@index([userId, createdAt]) // Nous permettra de montrer les dernieres chansons de l'utilisateur
-    @@index([originPlatform]) // Pour ensuite creer un filtre par plateforme
-    @@index([artist]) // Pour ensuite creer un filtre par artiste
-    @@index([title]) // Pour ensuite creer un filtre par titre
+    @@index([userId, createdAt])
+    @@index([originPlatform])
+    @@index([artist])
+    @@index([title])
     @@index([createdAt])
     @@map("songs")
 }
